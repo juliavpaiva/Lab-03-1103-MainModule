@@ -6,7 +6,6 @@ resource "aws_vpc" "vpc" {
  }
 }
 
-
 resource "aws_internet_gateway" "internet_gateway" {
  vpc_id = aws_vpc.vpc.id
  tags = {
@@ -63,7 +62,7 @@ resource "aws_security_group" "server_security_group" {
 }
 
 module "ec2_instance" {
-  source = "../Lab-03-1103-EC2Module"
+  source = "git::https://github.com/juliavpaiva/Lab-03-1103-EC2Module.git"
 
   region = var.region
   ami = "ami-0aaa5410833273cfe"
@@ -74,7 +73,7 @@ module "ec2_instance" {
 }
 
 module "rds_instance" {
-  source = "../Lab-03-1103-RDSModule"
+  source = "git::https://github.com/juliavpaiva/Lab-03-1103-RDSModule.git"
 
   region = var.region
   security_group_id = aws_security_group.server_security_group.id
@@ -90,7 +89,7 @@ module "rds_instance" {
 }
 
 module "sqs_queue" {
-  source = "../Lab-03-1103-SQSModule"
+  source = "git::https://github.com/juliavpaiva/Lab-03-1103-SQSModule.git"
 
   region = var.region
   queue_name = var.module_name
